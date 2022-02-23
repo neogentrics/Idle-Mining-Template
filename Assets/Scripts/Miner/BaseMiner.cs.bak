@@ -1,0 +1,86 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using DG.Tweening;
+using UnityEngine;
+
+public class BaseMiner : MonoBehaviour
+{
+    [SerializeField] protected Transform miningLocation;
+    [SerializeField] protected Transform depositLocation;
+    [SerializeField] protected float moveSpeed;
+
+    [Header("Initial Value")]
+    [SerializeField] private float initialCollectCapacity;
+    [SerializeField] private float initialCollectPerSecond;
+
+    public float CurrentGold { get; set; }
+    public float CollectCapacity { get; set; }
+    public float CollectPerSecond { get; set; }
+    public bool IsTimeToCollect { get; set; }
+
+    private void Start()
+    {
+        IsTimeToCollect = true;
+
+        CollectCapacity = initialCollectCapacity;
+        CollectPerSecond = initialCollectPerSecond;
+    }
+
+    protected void MoveMiner(Vector3 newPosition)
+    {
+        transform.DOMove(newPosition, moveSpeed).SetEase(Ease.Linear).OnComplete((() =>
+        {
+            if (IsTimeToCollect)
+            {
+                CollectGold();
+            }
+            else
+            {
+                DepositGold();
+            }
+
+        })).Play();
+    }
+        
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Vector3 xPos = new Vector3(miningLocation.position.x, transform.position.y);
+            MoveMiner(xPos);
+        }
+    }
+
+    protected virtual void CollectGold()
+    {
+
+    }
+
+    protected virtual IEnumerator IECollect(float gold, float collectTime)
+    {
+        yield return null;
+    }
+
+    protected virtual void DepositGold() 
+    {
+
+    }
+
+    protected void ChangeGold()
+    {
+        IsTimeToCollect = !IsTimeToCollect;
+    }
+
+    protected void RotateMiner(int direction)
+    {
+        if (direction == 1)
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+        }
+        else
+        {
+            transform.localScale = new Vector3(-1, 1, 1);
+        }
+    }
+}

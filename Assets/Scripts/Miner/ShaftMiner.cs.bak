@@ -1,0 +1,34 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class ShaftMiner : BaseMiner
+{
+    protected override void CollectGold()
+    {
+        float collectTime = CollectCapacity / CollectPerSecond;
+        StartCoroutine(IECollect(CollectCapacity, collectTime));
+    }
+
+    protected override IEnumerator IECollect(float gold, float collectTime)
+    {
+        yield return new WaitForSeconds(collectTime);
+
+        CurrentGold = gold;
+        ChangeGold();
+        RotateMiner(-1);
+        Vector3 depositPos = new Vector3(depositLocation.position.x, transform.position.y);
+        MoveMiner(depositPos);
+    }
+
+    protected override void DepositGold()
+    {
+		
+		
+        CurrentGold = 0;
+        ChangeGold();
+        RotateMiner(1);
+        Vector3 xPos = new Vector3(miningLocation.position.x, transform.position.y);
+        MoveMiner(xPos);
+    }
+}
