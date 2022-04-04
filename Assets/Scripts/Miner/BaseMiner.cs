@@ -1,24 +1,24 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 
 public class BaseMiner : MonoBehaviour, IClickable
-{  	
-    [Header("Initial Values")]
+{
+    [Header("Initial Values")] 
     [SerializeField] private float initialCollectCapacity;
     [SerializeField] private float initialCollectPerSecond;
     [SerializeField] protected float moveSpeed;
-
+    
     public float CurrentGold { get; set; }
     public float CollectCapacity { get; set; }
     public float CollectPerSecond { get; set; }
     public bool IsTimeToCollect { get; set; }
     public bool MinerClicked { get; set; }
-
+    
     protected Animator _animator;
-
+    
     private void Start()
     {
         _animator = GetComponent<Animator>();
@@ -41,7 +41,7 @@ public class BaseMiner : MonoBehaviour, IClickable
     {
         
     }
-
+    
     protected virtual void MoveMiner(Vector3 newPosition)
     {
         transform.DOMove(newPosition, moveSpeed).SetEase(Ease.Linear).OnComplete((() =>
@@ -57,23 +57,27 @@ public class BaseMiner : MonoBehaviour, IClickable
 
         })).Play();
     }
-        
     
     protected virtual void CollectGold()
     {
-
+        
     }
 
-    protected virtual IEnumerator IECollect(float gold, float collectTime)
+    protected virtual IEnumerator IECollect(float gold, float collecTime)
     {
         yield return null;
     }
-
-    protected virtual void DepositGold() 
+    
+    protected virtual void DepositGold()
     {
-
+        
     }
 
+    protected virtual IEnumerator IEDeposit(float depositTime)
+    {
+        yield return null;
+    }
+    
     protected void ChangeGoal()
     {
         IsTimeToCollect = !IsTimeToCollect;
@@ -90,6 +94,4 @@ public class BaseMiner : MonoBehaviour, IClickable
             transform.localScale = new Vector3(-1, 1, 1);
         }
     }
-
-    
 }

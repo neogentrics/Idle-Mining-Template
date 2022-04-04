@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -10,15 +10,17 @@ public class ShaftUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI shaftLevel;
     [SerializeField] private TextMeshProUGUI newShaftCost;
     [SerializeField] private GameObject newShaftButton;
-
+    
     private Shaft _shaft;
-        
+    
+    // Start is called before the first frame update
     private void Awake()
     {
         _shaft = GetComponent<Shaft>();
     }
-        
-    void Update()
+
+    // Update is called once per frame
+    private void Update()
     {
         depositGold.text = _shaft.ShaftDeposit.CurrentGold.ToString();
     }
@@ -31,7 +33,7 @@ public class ShaftUI : MonoBehaviour
 
     public void SetShaftUI(int ID)
     {
-        _shaft .ShaftID = ID;
+        _shaft.ShaftID = ID;
         shaftID.text = (ID + 1).ToString();
     }
 

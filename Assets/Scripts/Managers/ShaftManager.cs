@@ -1,3 +1,4 @@
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,15 +7,14 @@ public class ShaftManager : Singleton<ShaftManager>
 {
     [SerializeField] private Shaft shaftPrefab;
     [SerializeField] private float newShaftYPosition;
-    [SerializeField] private float newShaftCost = 5000;    
+    [SerializeField] private float newShaftCost = 5000;
     [SerializeField] private float newShaftCostMultiplier = 10;
-
+    
     [SerializeField] private List<Shaft> shafts;
 
     public List<Shaft> Shafts => shafts;
-
     public float ShaftCost { get; set; }
-
+    
     private int _currentShaftIndex;
 
     private void Start()
@@ -22,8 +22,7 @@ public class ShaftManager : Singleton<ShaftManager>
         ShaftCost = newShaftCost;
     }
 
-
-    void Update()
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.N))
         {
@@ -39,10 +38,10 @@ public class ShaftManager : Singleton<ShaftManager>
 
         _currentShaftIndex++;
         ShaftCost *= newShaftCostMultiplier;
-
+        
         newShaft.ShaftUI.SetShaftUI(_currentShaftIndex);
         newShaft.ShaftUI.SetNewShaftCost(ShaftCost);
-
+        
         shafts.Add(newShaft);
     }
 }

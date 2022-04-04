@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,8 +14,8 @@ public class Singleton<T> : MonoBehaviour where T : Component
                 instance = FindObjectOfType<T>();
                 if (instance == null)
                 {
-                    GameObject NewGo = new GameObject();
-                    instance = NewGo.AddComponent<T>();
+                    GameObject newGO = new GameObject();
+                    instance = newGO.AddComponent<T>();
                 }
             }
 
@@ -26,5 +26,5 @@ public class Singleton<T> : MonoBehaviour where T : Component
     protected virtual void Awake()
     {
         instance = this as T;
-    }    
+    }
 }
